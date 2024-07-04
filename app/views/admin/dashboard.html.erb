@@ -5,10 +5,21 @@
     <%= link_to 'Manage Users', admin_users_path, class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' %>
   </div>
 
+
+  <div class="mb-4">
+    <%= link_to 'Manage tags', admin_tags_path, class: 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' %>
+  </div>
+
   <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
     <h2 class="text-xl font-bold mb-4">User Statistics</h2>
     <p>Total Users: <%= User.count %></p>
     <p>Admin Users: <%= User.where(role: 'admin').count %></p>
     <p>Regular Users: <%= User.where(role: 'writer').count %></p>
   </div>
+
+<div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <h2 class="text-xl font-bold mb-4">Tags Statistics</h2>
+    <p>Total Tags: <%= Tag.count %></p>
+  </div>
+
 </div>

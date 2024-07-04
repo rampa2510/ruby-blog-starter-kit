@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
+  resources :posts
+  resources :tags, only: %i[index show]
+
   namespace :admin do
+    resources :tags
     resources :users, only: %i[index new create edit update destroy]
   end
+
   get 'admin/dashboard', to: 'admin#dashboard'
   root 'home#index'
   devise_for :users, skip: [:registrations]
