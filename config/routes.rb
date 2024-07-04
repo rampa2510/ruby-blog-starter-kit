@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    resources :users, only: %i[index new create edit update destroy]
+  end
+  get 'admin/dashboard', to: 'admin#dashboard'
   root 'home#index'
   devise_for :users, skip: [:registrations]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

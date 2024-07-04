@@ -5,4 +5,18 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates :role, inclusion: { in: %w[admin writer] }
+
+  # Helper methods to check user roles
+  def admin?
+    role == 'admin'
+  end
+
+  def writer?
+    role == 'writer'
+  end
+
+  # Override Devise's method to allow creation of users without password
+  def password_required?
+    new_record? ? false : super
+  end
 end
