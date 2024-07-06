@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
   validates :role, inclusion: { in: %w[admin writer] }
 
+  has_many :posts, foreign_key: 'author_id', dependent: :destroy
+
   # Helper methods to check user roles
   def admin?
     role == 'admin'

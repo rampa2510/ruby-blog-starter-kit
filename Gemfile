@@ -71,7 +71,9 @@ end
 
 ## Custom packages
 gem 'aasm'
+gem 'aws-sdk-s3', require: false
 gem 'devise'
 gem 'dotenv-rails', groups: %i[development test]
 gem 'kaminari'
+gem 'mini_magick'
 gem 'ransack'

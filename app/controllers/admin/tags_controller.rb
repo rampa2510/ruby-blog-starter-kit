@@ -1,6 +1,4 @@
 class Admin::TagsController < AdminController
-  before_action :authenticate_user!
-  before_action :check_admin
   before_action :set_tag, only: %i[edit update destroy]
 
   def index
