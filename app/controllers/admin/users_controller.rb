@@ -14,7 +14,7 @@ class Admin::UsersController < AdminController
     if @user.save
       redirect_to admin_users_path, notice: 'User was successfully created.'
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -24,13 +24,13 @@ class Admin::UsersController < AdminController
     if @user.update(user_params)
       redirect_to admin_users_path, notice: 'User was successfully updated.'
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @user.destroy
-    redirect_to admin_users_path, notice: 'User was successfully deleted.'
+    redirect_to admin_users_path, notice: 'User was successfully deleted.', status: :see_other
   end
 
   private
@@ -40,6 +40,7 @@ class Admin::UsersController < AdminController
   end
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :role)
+    params.require(:user).permit(:email, :password, :password_confirmation, :role,
+                                 :first_name, :last_name, :linkedin_url, :twitter_url, :description)
   end
 end
