@@ -1,76 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>RubyBlogStarterKit</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
-  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-  <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
-  <%= yield :head %>
-  <script>
+  <head>
+    <title>RubyBlogStarterKit</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+    <%= yield :head %>
 
-    function setInitialTheme() {
-      if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
+    <style>
+      html {
+        transition: background-color 0.3s ease;
       }
-    }
-
-    function toggleDarkMode() {
-      if (document.documentElement.classList.contains('dark')) {
-        document.documentElement.classList.remove('dark');
-        localStorage.theme = 'light';
-      } else {
-        document.documentElement.classList.add('dark');
-        localStorage.theme = 'dark';
+      body {
+        transition: color 0.3s ease;
       }
-    }
-
-    // Set initial theme immediately
-    setInitialTheme();
-
-    // Add event listener after DOM is loaded
-    function addToggleListener() {
-      const toggleButton = document.getElementById('darkModeToggle');
-      if (toggleButton) {
-        toggleButton.addEventListener('click', toggleDarkMode);
+      .theme-transition {
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
       }
-    }
+    </style>
 
-    // Try to add listener immediately
-    addToggleListener();
+    <script>
+      function toggleDarkMode() {
+        document.documentElement.classList.toggle('dark');
+        localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+      }
 
-    // If the button wasn't found, try again after DOM is fully loaded
-    document.addEventListener('DOMContentLoaded', addToggleListener);
+      function setInitialTheme() {
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        }
+      }
 
-    // If using Turbo, also listen for turbo:load event
-    document.addEventListener('turbo:load', addToggleListener);
-  </script>
-</head>
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-  <div class="container mx-auto px-4">
-    <div class="fixed top-0 right-0 m-4 z-50">
-      <button id="darkModeToggle" class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-4 py-2 rounded-md">
-        <span class="dark:hidden">🌙</span>
-        <span class="hidden dark:inline">☀️</span>
-      </button>
-    </div>
+      function addToggleListener() {
+        const toggleButton = document.getElementById('darkModeToggle');
+        if (toggleButton) {
+          toggleButton.addEventListener('click', toggleDarkMode);
+        }
+      }
 
-    <div class="pt-16 mb-8">
-      <%= image_tag "logo-light.svg", class: "mx-auto h-12 w-auto block dark:hidden", alt: "SARAL Logo (Light Mode)" %>
-      <%= image_tag "logo.svg", class: "mx-auto h-12 w-auto hidden dark:block", alt: "SARAL Logo (Dark Mode)" %>
-    </div>
+      // Set initial theme immediately
+      setInitialTheme();
 
-    <%= yield %>
+      // Use a single event listener for both DOMContentLoaded and turbo:load
+      function initialize() {
+        addToggleListener();
+      }
 
-    <% if user_signed_in? %>
-      <div class="mt-4 text-gray-600 dark:text-gray-400">
-        Logged in as <strong class="font-semibold"><%= current_user.email %></strong>.
-        <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: "mt-2 bg-red-500 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white font-bold py-2 px-4 rounded" %>
+      document.addEventListener('DOMContentLoaded', initialize);
+      document.addEventListener('turbo:load', initialize);
+    </script>
+
+  </head>
+  <body class="theme-transition bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <div class="container mx-auto px-4">
+
+      <div class="fixed top-0 right-0 m-4 z-50">
+        <button id="darkModeToggle" class="theme-transition relative bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-4 py-2 rounded-md group" aria-label="Toggle dark mode">
+          <span class="dark:hidden">&#127761;</span>
+          <span class="hidden dark:inline">☀️</span>
+          <span class="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-opacity absolute right-full top-1/2 transform -translate-y-1/2 mr-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap">
+            <span class="dark:hidden">Switch to dark mode</span>
+            <span class="hidden dark:inline">Switch to light mode</span>
+          </span>
+        </button>
       </div>
-    <% end %>
-  </div>
-</body>
+
+      <div class="pt-16 mb-8">
+        <%= image_tag "logo-light.svg", class: "mx-auto h-12 w-auto block dark:hidden", alt: "SARAL Logo (Light Mode)" %>
+        <%= image_tag "logo.svg", class: "mx-auto h-12 w-auto hidden dark:block", alt: "SARAL Logo (Dark Mode)" %>
+      </div>
+
+      <%= yield %>
+
+      <% if user_signed_in? %>
+        <div class="mt-4 text-gray-600 dark:text-gray-400">
+          Logged in as <strong class="font-semibold"><%= current_user.email %></strong>.
+          <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: "mt-2 bg-red-500 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white font-bold py-2 px-4 rounded" %>
+        </div>
+      <% end %>
+    </div>
+  </body>
 </html>
