@@ -14,6 +14,16 @@ if Rails.env.development?
     user.linkedin_url ||= ''
     user.twitter_url ||= ''
     user.description ||= 'Admin user'
+
+    # Always attach a default profile picture
+    default_image_path = Rails.root.join('app', 'assets', 'images', 'default_profile.webp')
+
+    # If the user already exists and has a profile picture, we don't want to overwrite it
+    unless user.profile_picture.attached?
+      user.profile_picture.attach(io: File.open(default_image_path), filename: 'default_profile.webp',
+                                  content_type: 'image/webp')
+    end
+
     user.save!
   end
 end

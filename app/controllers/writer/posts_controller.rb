@@ -18,7 +18,7 @@ class Writer::PostsController < WriterController
       redirect_to writer_posts_path, notice: 'Post was successfully saved as draft'
     else
       puts @post.errors.full_messages
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -29,12 +29,13 @@ class Writer::PostsController < WriterController
       notice = @post.draft? ? 'Draft was successfully updated' : 'Post was updated successfully'
       redirect_to writer_posts_path, notice:
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @post.destroy
+    redirect_to writer_posts_path, notice: 'Post deleted successfully', status: :see_other
   end
 
   def submit

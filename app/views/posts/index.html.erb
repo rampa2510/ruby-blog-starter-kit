@@ -1,2 +1,26 @@
-<h1>Posts#index</h1>
-<p>Find me in app/views/posts/index.html.erb</p>
+<div class="container mx-auto">
+  <div class="flex flex-wrap -mx-2">
+
+    <% @posts.each do |post| %>
+      <div class="w-full sm:w-1/3 px-2 mb-4">
+        <div class="bg-gray-200 min-h-[210px]  dark:bg-gray-950 p-4">
+          <h2 class="text-2xl">
+            <%= post.title %>
+          </h2>
+          <h3 class="text-sm mt-4 px-1 min-h-[48px] text-gray-900 dark:text-gray-200">
+            <%= post.sub_text %>
+          </h3>
+          <div class="flex px-2 py-4 items-center justify-start ">
+            <% if post.author.profile_picture.attached? %>
+              <%= image_tag post.author.profile_picture.variant(resize_to_limit: [50, 50]), class: "rounded-full mr-4" %>
+            <% else %>
+              <%= image_tag "default_profile.webp", class: "rounded-full", width: 50, height: 50 %>
+            <% end %>
+            <%= post.author.full_name %>
+          </div>
+
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

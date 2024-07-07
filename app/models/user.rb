@@ -1,8 +1,9 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable,
          :recoverable, :rememberable, :validatable
+
+  validates :email, uniqueness: true, if: :email_changed?
 
   validates :role, inclusion: { in: %w[admin writer] }
 
@@ -15,8 +16,8 @@ class User < ApplicationRecord
 
   has_one_attached :profile_picture
   # Validate profile picture
-  validates :profile_picture, content_type: ['image/png', 'image/jpeg', 'image/jpg'],
-                              attached: false
+  validates :profile_picture, content_type: ['image/png', 'image/jpeg', 'image/jpg', 'image/webp'],
+                              attached: true
 
   # Helper methods to check user roles
   def admin?
@@ -25,11 +26,6 @@ class User < ApplicationRecord
 
   def writer?
     role == 'writer'
-  end
-
-  # Override Devise's method to allow creation of users without password
-  def password_required?
-    new_record? ? false : super
   end
 
   def full_name

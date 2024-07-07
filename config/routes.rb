@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   end
 
   get 'admin/dashboard', to: 'admin#dashboard'
-  root 'home#index'
+  root 'posts#index'
   devise_for :users, skip: [:registrations]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

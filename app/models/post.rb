@@ -4,7 +4,7 @@ class Post < ApplicationRecord
   has_rich_text :body
 
   validates :title, presence: true
-  validates :sub_text, presence: true
+  validates :sub_text, presence: true, length: { maximum: 110, message: 'must be 110 characters or less' }
 
   include AASM
 
