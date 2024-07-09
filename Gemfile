@@ -78,3 +78,4 @@ gem 'dotenv-rails', groups: %i[development test]
 gem 'kaminari'
 gem 'mini_magick'
 gem 'ransack'
+gem 'view_component'

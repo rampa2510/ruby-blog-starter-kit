@@ -30,5 +30,6 @@ class Post < ApplicationRecord
   end
 
   scope :published, -> { where(status: 'published') }
+  scope :draft, -> { where(status: 'draft') }
   scope :filter_by_tag, ->(tag_id) { joins(:tags).where(tags: { id: tag_id }) }
 end

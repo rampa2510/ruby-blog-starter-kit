@@ -2,7 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Kode Mono';
+  src: url('../fonts/KodeMono-VariableFont_wght.ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-style: normal;
+}
 
+@layer base {
+  body {
+    font-family: 'Kode Mono', monospace;
+  }
+}
+
+@layer utilities {
+  .font-kode-mono {
+    font-family: 'Kode Mono', monospace;
+  }
+}
 
 trix-editor {
   border: 1px solid #bbb;
@@ -442,5 +459,24 @@ trix-editor .attachment__metadata {
   }
   ol {
     @apply list-decimal list-inside
+  }
+}
+
+@layer components {
+  .trix-content pre {
+    @apply bg-gray-100 text-gray-800 p-4 rounded-md overflow-x-auto;
+  }
+
+  .dark .trix-content pre {
+    @apply bg-gray-800 text-gray-200;
+  }
+
+  /* Override Trix's default styles for code blocks */
+  .trix-content pre {
+    @apply text-gray-800 bg-transparent p-0;
+  }
+
+  .dark .trix-content pre {
+    @apply text-gray-200;
   }
 }

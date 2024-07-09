@@ -1,29 +1,27 @@
-<div class="container mx-auto">
+<div class="container mx-auto px-4">
   <div class="flex flex-wrap -mx-2">
-
     <% @posts.each do |post| %>
-      <div class="w-full sm:w-1/3 px-2 mb-4">
-        <div class="bg-gray-200 min-h-[210px]  dark:bg-gray-800 p-4">
-          <h2 class="text-2xl">
+      <%= link_to post_path(post), class: "w-full sm:w-1/2 lg:w-1/3 px-2 mb-4" do %>
+        <div class="bg-gray-200 dark:bg-gray-800 p-4 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
+          <h2 class="text-2xl font-bold mb-2 text-gray-900 dark:text-gray-100">
             <%= post.title %>
           </h2>
-          <h3 class="text-sm mt-4 px-1 min-h-[48px] text-gray-900 dark:text-gray-200">
+          <h3 class="text-sm mb-4 flex-grow text-gray-700 dark:text-gray-300">
             <%= post.sub_text %>
           </h3>
-          <div class="flex px-2 py-4 items-center justify-start ">
+          <div class="flex items-center mb-2">
             <% if post.author.profile_picture.attached? %>
-              <%= image_tag post.author.profile_picture.variant(resize_to_limit: [50, 50]), class: "rounded-full mr-4" %>
+              <%= image_tag post.author.profile_picture.variant(resize_to_limit: [40, 40]), class: "rounded-full mr-2 w-10 h-10" %>
             <% else %>
-              <%= image_tag "default_profile.webp", class: "rounded-full", width: 50, height: 50 %>
+              <%= image_tag "default_profile.webp", class: "rounded-full mr-2 w-10 h-10" %>
             <% end %>
-            <%= post.author.full_name %>
+            <span class="text-gray-800 dark:text-gray-200"><%= post.author.full_name %></span>
           </div>
-          <div class="w-full flex justify-end text-gray-200 dark:text-gray-800">
-            <%= post.created_at.strftime("%B %d, %Y ") %>
+          <div class="text-xs text-gray-600 dark:text-gray-400 text-right">
+            <%= post.created_at.strftime("%B %d, %Y") %>
           </div>
-
         </div>
-      </div>
+      <% end %>
     <% end %>
   </div>
 </div>

@@ -13,6 +13,13 @@ Rails.application.routes.draw do
   resources :tags, only: %i[index show]
 
   namespace :admin do
+    resources :posts, only: %i[index show] do
+      member do
+        patch :approve
+        patch :request_changes
+        patch :archive
+      end
+    end
     resources :tags
     resources :users, only: %i[index new create edit update destroy]
   end

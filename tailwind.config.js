@@ -5,6 +5,13 @@ module.exports = {
     "./app/assets/stylesheets/**/*.css",
     "./app/javascript/**/*.js",
   ],
+  theme: {
+    extend: {
+      fontFamily: {
+        "kode-mono": ["Kode Mono", "monospace"],
+      },
+    },
+  },
   plugins: [require("@tailwindcss/typography")],
   darkMode: "class",
 };
