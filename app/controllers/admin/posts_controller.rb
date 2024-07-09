@@ -1,5 +1,5 @@
 class Admin::PostsController < ApplicationController
-  before_action :set_post, only: %i[show approve request_changes]
+  before_action :set_post, only: %i[show publish request_changes]
 
   def index
     @posts = Post.all

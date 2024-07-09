@@ -17,11 +17,11 @@ class Post < ApplicationRecord
     end
 
     event :request_changes do
-      transitions from: :submitted, to: :changes_requested
+      transitions from: %i[submitted draft], to: :changes_requested
     end
 
     event :publish do
-      transitions from: :submitted, to: :published
+      transitions from: %i[submitted draft], to: :published
     end
 
     event :archive do

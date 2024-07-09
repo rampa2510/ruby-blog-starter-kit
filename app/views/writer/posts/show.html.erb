@@ -1,5 +1,7 @@
 <%= render(PostViewComponent.new(post: @post)) %>
 <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-between items-center">
   <%= link_to 'Edit', edit_writer_post_path(@post), class: "bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded transition duration-300 ease-in-out" if current_user == @post.author %>
+
+  <%= link_to 'Submit', edit_writer_post_path(@post), class: "bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded transition duration-300 ease-in-out" if current_user == @post.author %>
   <%= link_to 'Back to Posts', writer_posts_path, class: "bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded transition duration-300 ease-in-out" %>
 </div>

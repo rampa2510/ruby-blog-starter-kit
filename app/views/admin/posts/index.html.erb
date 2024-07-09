@@ -1,2 +1,36 @@
-<h1>Admin::Posts#index</h1>
-<p>Find me in app/views/admin/posts/index.html.erb</p>
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-2xl font-bold mb-4">Pending Posts</h1>
+  
+  <table class="min-w-full">
+    <thead>
+      <tr>
+        <th class="py-2 px-4 border-b">Title</th>
+        <th class="py-2 px-4 border-b">Author</th>
+        <th class="py-2 px-4 border-b">Submitted At</th>
+        <th class="py-2 px-4 border-b">Status</th>
+        <th class="py-2 px-4 border-b">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @posts.each do |post| %>
+        <tr>
+          <td class="py-2 px-4 border-b text-center"><%= post.title %></td>
+          <td class="py-2 px-4 border-b text-center"><%= post.author.full_name %></td>
+          <td class="py-2 px-4 border-b text-center"><%= post.updated_at.strftime("%B %d, %Y") %></td>
+          <td class="py-2 px-4 border-b text-center"><%= post.status %></td>
+          <td class="py-2 px-4 border-b text-center">
+            <%= link_to "View", admin_post_path(post), class: "text-blue-500 hover:text-blue-700" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <% if @posts.empty? %>
+    <p class="mt-4 text-gray-600">There are no posts pending approval at this time.</p>
+  <% end %>
+
+  <div class="mt-4">
+    <%= link_to 'Back to Dashboard', admin_dashboard_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+  </div>
+</div>

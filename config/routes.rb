@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :posts, only: %i[index show] do
       member do
-        patch :approve
+        patch :publish
         patch :request_changes
         patch :archive
       end

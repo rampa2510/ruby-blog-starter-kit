@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   def index
-    @posts = Post.includes(:author)
+    @posts = Post.published.includes(:author)
     @posts = @posts.filter_by_tag(params[:tag_id]) if params[:tag_id].present?
   end
 
